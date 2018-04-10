@@ -1,0 +1,12 @@
+---
+- name: Modificando prod
+  hosts: prod
+  tasks:
+   - name: Verificando o hostname das maquinas
+     command: hostname
+
+   - name: verificando ip das maquinas
+     command: ip a show enp0s8
+
+   - name: verificando o uptime
+     command: uptime
