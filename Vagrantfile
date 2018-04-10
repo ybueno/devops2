@@ -33,15 +33,16 @@ Vagrant.configure("2") do |config|
   end
 
   (1..2).each do |i|
-    config.vm.define "centos#{i}" do |node|
-      node.vm.hostname = "centos#{i}"
+    config.vm.define "dev#{i}" do |node|
+      node.vm.hostname = "dev#{i}"
       node.vm.provision "shell", inline: <<-SHELL
-        yum update -y
+	apt clean all
+        apt update
       SHELL
     end
   end
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+   config.vm.provision "shell", inline: <<-SHELL
+	sudo cat /vagrant/chave.pub >> /root/.ssh/authorized_keys
+	sudo apt install python -y
+   SHELL
 end
