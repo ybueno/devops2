@@ -34,15 +34,17 @@ Vagrant.configure("2") do |config|
 
   (1..2).each do |i|
     config.vm.define "dev#{i}" do |node|
+      node.vm.box = "centos/7"
       node.vm.hostname = "dev#{i}"
       node.vm.provision "shell", inline: <<-SHELL
-	apt clean all
-        apt update
+	yum update -y
       SHELL
     end
   end
+
    config.vm.provision "shell", inline: <<-SHELL
-	sudo cat /vagrant/chave.pub >> /root/.ssh/authorized_keys
-	sudo apt install python -y
+	sudo mkdir -p /root/.ssh
+	sudo touch /root/.ssh/authorized_keys
+	sudo cat /vagrant/chave.pub >> /root/.ssh/authorized_keys	
    SHELL
 end
