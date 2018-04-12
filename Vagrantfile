@@ -23,6 +23,9 @@ Vagrant.configure("2") do |config|
   
   (1..2).each do |i|
     config.vm.define "ubuntu#{i}" do |node|
+      node.vm.provider "virtualbox" do |vb|
+        vb.memory = "3072"
+      end
       node.vm.hostname = "ubuntu#{i}"
       node.vm.provision "shell", inline: <<-SHELL
         apt clean all
